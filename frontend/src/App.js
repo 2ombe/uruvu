@@ -36,6 +36,7 @@ import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 
 import Iyandikishe from "./screens/Irandikishe";
+import ProductListScreen from "./screens/productListScreen copy";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -142,6 +143,9 @@ function App() {
                       <LinkContainer to="/admin/orders">
                         <NavDropdown.Item>Claims</NavDropdown.Item>
                       </LinkContainer>
+                      <LinkContainer to="/admin/product">
+                        <NavDropdown.Item>items</NavDropdown.Item>
+                      </LinkContainer>
                       <LinkContainer to="/admin/users">
                         <NavDropdown.Item>users</NavDropdown.Item>
                       </LinkContainer>
@@ -220,6 +224,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <DashboardScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/product"
+                element={
+                  <AdminRoute>
+                    <ProductListScreen />
                   </AdminRoute>
                 }
               />

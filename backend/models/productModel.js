@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const productSchema = new mongoose.Schema(
   {
@@ -23,9 +24,6 @@ const productSchema = new mongoose.Schema(
     price: {
       type: Number,
     },
-    costPrice: {
-      type: Number,
-    },
 
     countInStock: {
       type: Number,
@@ -34,14 +32,22 @@ const productSchema = new mongoose.Schema(
     rating: {
       type: Number,
     },
-    numReviews: {
-      type: Number,
-    },
   },
   {
     timestamps: true,
   }
 );
+
+productSchema.pre("save", async function (next) {
+  if (this.isModified("image slag")) {
+    return next();
+  }
+  const salt = await bcrypt.genSalt(6);
+  const hashedInfo = await bcrypt.hash(this.slug, this.image, salt);
+  this.slug = hashedInfo;
+  this.image = hashedInfo;
+  next();
+});
 
 const Product = mongoose.model("Product", productSchema);
 export default Product;
